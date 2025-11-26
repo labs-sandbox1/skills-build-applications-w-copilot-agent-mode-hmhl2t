@@ -17,13 +17,36 @@ const Users = () => {
   }, [endpoint]);
 
   return (
-    <div>
-      <h2>Users</h2>
-      <ul>
-        {users.map(user => (
-          <li key={user.id}>{user.username}</li>
-        ))}
-      </ul>
+    <div className="card shadow-sm mb-4">
+      <div className="card-header bg-secondary text-white">
+        <h2 className="card-title h4 mb-0">Users</h2>
+      </div>
+      <div className="card-body">
+        {users.length > 0 ? (
+          <div className="table-responsive">
+            <table className="table table-striped table-bordered align-middle">
+              <thead className="table-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Username</th>
+                  {/* Add more columns as needed */}
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user, idx) => (
+                  <tr key={user.id || idx}>
+                    <td>{idx + 1}</td>
+                    <td>{user.username}</td>
+                    {/* Add more cells as needed */}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="text-center text-muted">No users found.</div>
+        )}
+      </div>
     </div>
   );
 };

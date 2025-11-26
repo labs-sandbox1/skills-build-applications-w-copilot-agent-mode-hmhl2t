@@ -17,13 +17,36 @@ const Teams = () => {
   }, [endpoint]);
 
   return (
-    <div>
-      <h2>Teams</h2>
-      <ul>
-        {teams.map((team, idx) => (
-          <li key={team.id || idx}>{team.name || JSON.stringify(team)}</li>
-        ))}
-      </ul>
+    <div className="card shadow-sm mb-4">
+      <div className="card-header bg-info text-white">
+        <h2 className="card-title h4 mb-0">Teams</h2>
+      </div>
+      <div className="card-body">
+        {teams.length > 0 ? (
+          <div className="table-responsive">
+            <table className="table table-striped table-bordered align-middle">
+              <thead className="table-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  {/* Add more columns as needed */}
+                </tr>
+              </thead>
+              <tbody>
+                {teams.map((team, idx) => (
+                  <tr key={team.id || idx}>
+                    <td>{idx + 1}</td>
+                    <td>{team.name || JSON.stringify(team)}</td>
+                    {/* Add more cells as needed */}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="text-center text-muted">No teams found.</div>
+        )}
+      </div>
     </div>
   );
 };
