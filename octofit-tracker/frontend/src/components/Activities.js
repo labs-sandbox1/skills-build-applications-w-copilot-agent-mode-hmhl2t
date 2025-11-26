@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 
 const Activities = () => {
   const [activities, setActivities] = useState([]);
-  const endpoint = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/activities/`;
+  const endpoint = `/api/activities/`;
 
   useEffect(() => {
+    console.log('Fetching Activities from:', endpoint);
     fetch(endpoint)
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
-        console.log('Activities API endpoint:', endpoint);
-        console.log('Fetched activities:', data);
-        setActivities(data.results || data);
+        const results = data.results || data;
+        console.log('Activities data:', results);
+        setActivities(results);
       })
-      .catch(err => console.error('Error fetching activities:', err));
+      .catch(error => console.error('Error fetching activities:', error));
   }, [endpoint]);
 
   return (

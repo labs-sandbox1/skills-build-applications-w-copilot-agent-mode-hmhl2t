@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 
 const Teams = () => {
   const [teams, setTeams] = useState([]);
-  const endpoint = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/teams/`;
+  const endpoint = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/teams/`; // Updated endpoint
 
   useEffect(() => {
+    console.log('Fetching Teams from:', endpoint);
     fetch(endpoint)
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
-        console.log('Teams API endpoint:', endpoint);
-        console.log('Fetched teams:', data);
-        setTeams(data.results || data);
+        const results = data.results || data;
+        console.log('Teams data:', results);
+        setTeams(results);
       })
-      .catch(err => console.error('Error fetching teams:', err));
+      .catch(error => console.error('Error fetching teams:', error));
   }, [endpoint]);
 
   return (

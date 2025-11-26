@@ -5,22 +5,22 @@ const Leaderboard = () => {
   const endpoint = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`;
 
   useEffect(() => {
+    console.log('Fetching Leaderboard from:', endpoint);
     fetch(endpoint)
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
-        console.log('Leaderboard API endpoint:', endpoint);
-        console.log('Fetched leaderboard:', data);
+        console.log('Leaderboard data:', data.results || data);
         setLeaders(data.results || data);
       })
-      .catch(err => console.error('Error fetching leaderboard:', err));
+      .catch(error => console.error('Error fetching leaderboard:', error));
   }, [endpoint]);
 
   return (
     <div>
       <h2>Leaderboard</h2>
       <ul>
-        {leaders.map((leader, idx) => (
-          <li key={leader.id || idx}>{leader.name || JSON.stringify(leader)}</li>
+        {leaders.map(entry => (
+          <li key={entry.id}>{entry.user}: {entry.score}</li>
         ))}
       </ul>
     </div>

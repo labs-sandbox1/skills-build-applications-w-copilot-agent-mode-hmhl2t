@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
-  const endpoint = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`;
+    const endpoint = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`; // Updated endpoint
 
   useEffect(() => {
+    console.log('Fetching Workouts from:', endpoint);
     fetch(endpoint)
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
-        console.log('Workouts API endpoint:', endpoint);
-        console.log('Fetched workouts:', data);
-        setWorkouts(data.results || data);
+        const results = data.results || data;
+        console.log('Workouts data:', results);
+        setWorkouts(results);
       })
-      .catch(err => console.error('Error fetching workouts:', err));
+      .catch(error => console.error('Error fetching workouts:', error));
   }, [endpoint]);
 
   return (
@@ -20,7 +21,7 @@ const Workouts = () => {
       <h2>Workouts</h2>
       <ul>
         {workouts.map((workout, idx) => (
-          <li key={workout.id || idx}>{workout.name || JSON.stringify(workout)}</li>
+            <li key={workout.id || idx}>{workout.name}</li>
         ))}
       </ul>
     </div>
